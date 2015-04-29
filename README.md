@@ -44,7 +44,7 @@ Follow steps below to get started.
    *Result:*
 
    ```
-   parsedContent == "The Date and Time is: 2015-01-01 10:10:00"
+   parsedContent == "The date and time is: 2015-01-01 10:10:00."
    ```
 
 ## License
