@@ -18,35 +18,34 @@ Follow steps below to get started.
 
 1. Create a Shortcode class.
 
-```csharp
-public class NowShortcode : Shortcode
-{
-    public override string Generate(IShortcodeContext context)
-    {
-        return DateTime.Now.ToString();
-    }
-}
-```
+   ```csharp
+   public class NowShortcode : Shortcode
+   {
+       public override string Generate(IShortcodeContext context)
+       {
+           return DateTime.Now.ToString();
+       }
+   }
+   ```
 
 2. Register the shortcode.
 
-```csharp
-ShortcodeFactory.Provider.Add<NowShortcode>(tag: "now");
-```
+   ```csharp
+   ShortcodeFactory.Provider.Add<NowShortcode>(tag: "now");
+   ```
 
 3. Parse content using registered shortcodes
 
+   ```csharp
+   var content = "The date and time is: [now].";
+   var parsedContent = ShortcodeFactory.Parser.Parse(body);
+   ```
 
-```csharp
-var content = "The date and time is: [now].";
-var parsedContent = ShortcodeFactory.Parser.Parse(body);
-```
+   *Result:*
 
-Result: 
-
-```
-parsedContent == "The Date and Time is: 2015-01-01 10:10:00"
-```
+   ```
+   parsedContent == "The Date and Time is: 2015-01-01 10:10:00"
+   ```
 
 ## License
 
