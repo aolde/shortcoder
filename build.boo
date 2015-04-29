@@ -1,5 +1,6 @@
 solution_file = "src/Shortcoder.sln"
-configuration = "release"
+configuration40 = "release-4.0"
+configuration45 = "release-4.5"
 version = env("version")
 build_name = ""
 
@@ -18,24 +19,23 @@ target init:
   
 desc "Compiles the solution"
 target compile:
-  msbuild(file: solution_file, configuration: configuration)
+  msbuild(file: solution_file, configuration: configuration40)
+  msbuild(file: solution_file, configuration: configuration45)
   
 desc "Copies the binaries to the 'build' directory"
 target deploy:
   print "Copying to build dir"
 
-  with FileList("src/Shortcoder/bin/${configuration}"):
+  with FileList("src/Shortcoder/bin/release/net40"):
     .Include("*.{dll,exe}")
     .ForEach def(file):
-      file.CopyToDirectory(build_dir + "/Shortcoder")
-  
-  print "Copying libs to build dir"
-  
-  with FileList("lib"):
-    .Include("*.{dll}")
+      file.CopyToDirectory(build_dir + "/Shortcoder/net40")
+    
+  with FileList("src/Shortcoder/bin/release/net45"):
+    .Include("*.{dll,exe}")
     .ForEach def(file):
-      file.CopyToDirectory(build_dir + "/Shortcoder")
-      
+      file.CopyToDirectory(build_dir + "/Shortcoder/net45")
+        
   print "Copy readme file to build dir"
   
   cp("README.md", build_dir + "/Shortcoder/README.txt")
@@ -46,7 +46,12 @@ target package:
 
 desc "Making nuget-package"
 target nuget, package:
-  with FileList(build_dir + "/Shortcoder"):
+  with FileList(build_dir + "/Shortcoder/net40"):
+    .Include("*.{dll,exe}")
+    .ForEach def(file):
+      file.CopyToDirectory("src/NuGetPackage/lib/net40")
+      
+  with FileList(build_dir + "/Shortcoder/net45"):
     .Include("*.{dll,exe}")
     .ForEach def(file):
       file.CopyToDirectory("src/NuGetPackage/lib/net45")
