@@ -6,7 +6,15 @@
 
 - Parsing works in most cases, but more tests need to be added for edge cases.
 
-# Quick Sample Usage
+## Installation
+
+Install through NuGet:
+
+> Install-Package Shortcoder -Pre
+
+Follow steps below to get started.
+
+## Quick Sample Usage
 
 1. Create a Shortcode class.
 
@@ -40,6 +48,6 @@ Result:
 parsedContent == "The Date and Time is: 2015-01-01 10:10:00"
 ```
 
-# License
+## License
 
 See [LICENSE](LICENSE.txt)
