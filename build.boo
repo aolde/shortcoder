@@ -53,7 +53,7 @@ target nuget, package:
     
   with nuget_pack():
     .toolPath = "tools/nuget/nuget.exe"
-    .nuspecFile = "src/NuGetPackage/shortcoder.nuspec"
+    .nuspecFile = "src/NuGetPackage/Shortcoder.nuspec"
     .outputDirectory = build_dir
     .basePath = "src/NuGetPackage"
     .version = version
