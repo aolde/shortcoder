@@ -1,5 +1,7 @@
 # Shortcoder
 
+[![Build status](https://ci.appveyor.com/api/projects/status/wn2qb1t94d8vy4bk?svg=true)](https://ci.appveyor.com/project/simplyio/shortcoder)
+
 > Add support for Wordpress Shortcodes in a .NET application.
 
 ## Project Status
