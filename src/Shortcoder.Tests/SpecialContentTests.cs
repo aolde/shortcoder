@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Shortcoder.Tests.DummyShortcodes;
+﻿using Shortcoder.Tests.DummyShortcodes;
+using Xunit;
 
 namespace Shortcoder.Tests
 {
-    [TestClass]
     public class SpecialContentTests
     {
         private IShortcodeParser _shortcodeParser;
@@ -20,117 +19,117 @@ namespace Shortcoder.Tests
             _shortcodeParser = new ShortcodeParser(shortcodeProvider);
         }
 
-        [TestMethod]
+        [Fact]
         public void IgnorePlainText()
         {
             var content = "Lorem ipsum dolor sit amet.";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual(content, result);
+            Assert.Equal(content, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void IgnoreUnregisteredShortcode()
         {
             var content = "[random]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual(content, result);
+            Assert.Equal(content, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void IgnoreUnregisteredShortcodeWithAttribute()
         {
             var content = "[random name=\"Joe\"]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual(content, result);
+            Assert.Equal(content, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void AttributeWithBracketsShouldWork()
         {
             var content = "[dummy-medium name=\"[Joe Doe]\"]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Dummy Medium, and you are [Joe Doe].", result);
+            Assert.Equal("Dummy Medium, and you are [Joe Doe].", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void SpaceShouldNotAffectParsing()
         {
             var content = "[  dummy-medium name  =  \"Hello World\"  ]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Dummy Medium, and you are Hello World.", result);
+            Assert.Equal("Dummy Medium, and you are Hello World.", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void MultipleShortcodesMixedWithPlainText()
         {
             var content = "Lorem ipsum dolor sit. [dummy-medium name=Hello] [dummy-medium name=Hello] [dummy-medium name=Hello World] Lorem ipsum dolor sit.";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Lorem ipsum dolor sit. Dummy Medium, and you are Hello. Dummy Medium, and you are Hello. Dummy Medium, and you are Hello World. Lorem ipsum dolor sit.", result);
+            Assert.Equal("Lorem ipsum dolor sit. Dummy Medium, and you are Hello. Dummy Medium, and you are Hello. Dummy Medium, and you are Hello World. Lorem ipsum dolor sit.", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void AttributeWithHtmlShouldWork()
         {
             var content = "[dummy-medium name=\"<b>Hello World</b>\"]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Dummy Medium, and you are <b>Hello World</b>.", result);
+            Assert.Equal("Dummy Medium, and you are <b>Hello World</b>.", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void AttributeWithHtmlWithCssClassShouldWork()
         {
             var content = "[dummy-medium name=\'<span class=\"highlight\">Hello World</span>\']";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Dummy Medium, and you are <span class=\"highlight\">Hello World</span>.", result);
+            Assert.Equal("Dummy Medium, and you are <span class=\"highlight\">Hello World</span>.", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void UnknownShortcodesShouldNotBeEscaped()
         {
             var content = "[[random name=\"Joe\"]]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual(content, result);
+            Assert.Equal(content, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void SingleEscapedShortcodeShouldNotBeTransformed()
         {
             var content = "[[dummy name=\"Joe\"]]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("[dummy name=\"Joe\"]", result);
+            Assert.Equal("[dummy name=\"Joe\"]", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void EscapedShortcodeShouldNotBeTransformed()
         {
             var content = "[[dummy name=Joe]Any HTML or shortcode may go here.[/dummy]]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("[dummy name=Joe]Any HTML or shortcode may go here.[/dummy]", result);
+            Assert.Equal("[dummy name=Joe]Any HTML or shortcode may go here.[/dummy]", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void MixedEscapedAndNonEscapedTagsShouldWork()
         {
             var content1 = "[dummy-medium name=Joe] [[dummy name=Joe]Any HTML or shortcode may go here.[/dummy]] [dummy-medium name=Joe]";
@@ -141,22 +140,22 @@ namespace Shortcoder.Tests
             var result2 = _shortcodeParser.Parse(content2);
             var result3 = _shortcodeParser.Parse(content3);
 
-            Assert.AreEqual("Dummy Medium, and you are Joe. [dummy name=Joe]Any HTML or shortcode may go here.[/dummy] Dummy Medium, and you are Joe.", result1);
-            Assert.AreEqual("Lorem ipsum dolor sit amet. Dummy Medium, and you are Joe. [dummy name=Joe]Any HTML or shortcode may go here.[/dummy]", result2);
-            Assert.AreEqual("Dummy Medium, and you are Joe. [dummy name=Joe]Any HTML or shortcode may go here.[/dummy] Lorem ipsum dolor sit amet.", result3);
+            Assert.Equal("Dummy Medium, and you are Joe. [dummy name=Joe]Any HTML or shortcode may go here.[/dummy] Dummy Medium, and you are Joe.", result1);
+            Assert.Equal("Lorem ipsum dolor sit amet. Dummy Medium, and you are Joe. [dummy name=Joe]Any HTML or shortcode may go here.[/dummy]", result2);
+            Assert.Equal("Dummy Medium, and you are Joe. [dummy name=Joe]Any HTML or shortcode may go here.[/dummy] Lorem ipsum dolor sit amet.", result3);
         }
 
-        [TestMethod]
+        [Fact]
         public void IncompleteEscapedTagsShouldBeIgnored()
         {
             var content = "lorem [[dummy-small] lorem ipsum [dummy-small]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("lorem [[dummy-small] lorem ipsum From Dummy Small", result);
+            Assert.Equal("lorem [[dummy-small] lorem ipsum From Dummy Small", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void IncompleteTagsShouldBeIgnored()
         {
             var content1 = "[ [dummy-small]";
@@ -167,9 +166,9 @@ namespace Shortcoder.Tests
             var result2 = _shortcodeParser.Parse(content2);
             var result3 = _shortcodeParser.Parse(content3);
 
-            Assert.AreEqual("[ From Dummy Small", result1);
-            Assert.AreEqual("[dummy-small From Dummy Small", result2);
-            Assert.AreEqual("[dummy-small[dummy-small]", result3);
+            Assert.Equal("[ From Dummy Small", result1);
+            Assert.Equal("[dummy-small From Dummy Small", result2);
+            Assert.Equal("[dummy-small[dummy-small]", result3);
         }
     }
 }

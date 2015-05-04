@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Shortcoder.Tests.DummyShortcodes;
+﻿using Shortcoder.Tests.DummyShortcodes;
+using Xunit;
 
 namespace Shortcoder.Tests
 {
@@ -12,8 +12,6 @@ namespace Shortcoder.Tests
     /// 5. [myshortcode example='non-enclosing' /] non-enclosed content [myshortcode] enclosed content [/myshortcode]
     /// 6. [myshortcode foo='123' bar=456] is equivalent to [myshortcode foo="123" bar="456"]
     /// 7. [myshortcode 123 hello] 
-
-    [TestClass]
     public class DummyShortcodeTests
     {
         private IShortcodeParser _shortcodeParser;
@@ -30,37 +28,37 @@ namespace Shortcoder.Tests
             _shortcodeParser = new ShortcodeParser(shortcodeProvider);    
         }
 
-        [TestMethod]
+        [Fact]
         public void DummyShortcodeShouldReturnNull()
         {
             var content = "[dummy]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual(string.Empty, result);
+            Assert.Equal(string.Empty, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void DummySmallShouldReturnGeneratedText()
         {
             var content = "Hello World [dummy-small]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Hello World From Dummy Small", result);
+            Assert.Equal("Hello World From Dummy Small", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void MultipleDummySmallShouldReturnGeneratedText()
         {
             var content = "Hello World [dummy-small] and [dummy-small]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Hello World From Dummy Small and From Dummy Small", result);
+            Assert.Equal("Hello World From Dummy Small and From Dummy Small", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void DummySmallShouldReturnTextUsingClosingTag()
         {
             var content1 = "Hello World [dummy-small /]";
@@ -71,71 +69,71 @@ namespace Shortcoder.Tests
 
             var expected = "Hello World From Dummy Small";
 
-            Assert.AreEqual(expected, result1);
-            Assert.AreEqual(expected, result2);
+            Assert.Equal(expected, result1);
+            Assert.Equal(expected, result2);
         }
 
-        [TestMethod]
+        [Fact]
         public void DummyMediumShouldReturnGeneratedTextUsingDoubleQuoteAttribute()
         {
             var content = "[dummy-medium name=\"Joe\"]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Dummy Medium, and you are Joe.", result);
+            Assert.Equal("Dummy Medium, and you are Joe.", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void DummyMediumShouldReturnGeneratedTextUsingMultipleAttributes()
         {
             var content = "[dummy-medium name=\"Joe\" age=\"12\"]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Dummy Medium, and you are Joe, age 12.", result);
+            Assert.Equal("Dummy Medium, and you are Joe, age 12.", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void DummyMediumShouldReturnGeneratedTextUsingSingleQuoteAttribute()
         {
             var content = "[dummy-medium name='Joe']";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Dummy Medium, and you are Joe.", result);
+            Assert.Equal("Dummy Medium, and you are Joe.", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void DummyMediumShouldReturnGeneratedTextUsingAttributeWithoutQuotes()
         {
             var content = "[dummy-medium name=Joe]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Dummy Medium, and you are Joe.", result);
+            Assert.Equal("Dummy Medium, and you are Joe.", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void DummyMediumShouldReturnGeneratedTextUsingAttributeWithoutValue()
         {
             var content = "[dummy-medium name]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Dummy Medium, and you are .", result);
+            Assert.Equal("Dummy Medium, and you are .", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void DummyHardShouldReturnGeneratedTextUsingPropertyGetters()
         {
             var content = "[dummy-hard name=\"Joe\" age=12]";
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Dummy Hard, and you are Joe, age 12.", result);
+            Assert.Equal("Dummy Hard, and you are Joe, age 12.", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void DummyAdvancedShouldReturnGeneratedTextUsingPropertyGetters()
         {
             var content = "[dummy-advanced name=\"Joe\" age=20]Dummy Advanced[/dummy-advanced]. " +
@@ -143,10 +141,10 @@ namespace Shortcoder.Tests
 
             var result = _shortcodeParser.Parse(content);
 
-            Assert.AreEqual("Hello Joe, 20 (Dummy Advanced). Hello Doe, 30 (Dummy 2 Advanced)", result);
+            Assert.Equal("Hello Joe, 20 (Dummy Advanced). Hello Doe, 30 (Dummy 2 Advanced)", result);
         }
 
-        [TestMethod]
+        [Fact]
         public void DummyAdvancdContentWithChildShortcodesShouldNotBeParsed()
         {
             var content1 = "[dummy-advanced name=\"Joe\" age=20]Hello [dummy-medium name=\"Doe\"] World[/dummy-advanced]";
@@ -157,9 +155,9 @@ namespace Shortcoder.Tests
             var result2 = _shortcodeParser.Parse(content2);
             var result3 = _shortcodeParser.Parse(content3);
 
-            Assert.AreEqual("Hello Joe, 20 (Hello [dummy-medium name=\"Doe\"] World)", result1);
-            Assert.AreEqual("Hello Joe, 20 (Hello [dummy-advanced name=\"Doe\"] World)", result2);
-            Assert.AreEqual("Hello Joe, 20 (Hello [dummy-advanced name=\"Doe\"]Big[/dummy-advanced] World)", result3);
+            Assert.Equal("Hello Joe, 20 (Hello [dummy-medium name=\"Doe\"] World)", result1);
+            Assert.Equal("Hello Joe, 20 (Hello [dummy-advanced name=\"Doe\"] World)", result2);
+            Assert.Equal("Hello Joe, 20 (Hello [dummy-advanced name=\"Doe\"]Big[/dummy-advanced] World)", result3);
         }
 
     }
