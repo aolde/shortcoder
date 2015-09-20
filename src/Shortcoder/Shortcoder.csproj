@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IShortcodeContext.cs" />
+    <Compile Include="IShortcodeParserFactory.cs" />
     <Compile Include="Parsing\States\ParserState.cs" />
     <Compile Include="Parsing\States\ParsingAttributesState.cs" />
     <Compile Include="Parsing\States\ParsingOpenTagState.cs" />
@@ -64,7 +65,8 @@
     <Compile Include="Shortcode.cs" />
     <Compile Include="ShortcodeContext.cs" />
     <Compile Include="ShortcodeParser.cs" />
-    <Compile Include="ShortcodeFactory.cs" />
+    <Compile Include="ShortcodeConfiguration.cs" />
+    <Compile Include="ShortcodeParserFactory.cs" />
     <Compile Include="ShortcodeProvider.cs" />
     <Compile Include="Parsing\ShortcodeParseInfo.cs" />
     <Compile Include="Utilities\StaticReflection.cs" />

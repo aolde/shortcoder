@@ -25,6 +25,14 @@ namespace Shortcoder
         public List<ShortcodeParseInfo> ParseInstructions { get; set; }
         public ShortcodeParseInfo CurrentShortcode { get; set; }
 
+        public static IShortcodeParser Current
+        {
+            get
+            {
+                return ShortcodeConfiguration.ParserFactory.Create();
+            }
+        }
+
         public ShortcodeParser(IShortcodeProvider shortcodeProvider)
         {
             ShortcodeProvider = shortcodeProvider;
