@@ -1,4 +1,6 @@
-﻿namespace Shortcoder.Tests.DummyShortcodes
+﻿using System;
+
+namespace Shortcoder.Tests.DummyShortcodes
 {
     public class DummyAdvancedShortcode : Shortcode
     {
@@ -7,12 +9,11 @@
 
         public override string Generate(IShortcodeContext context)
         {
-            //var parsedContent = context.Parser.Parse(Content);
             if (!string.IsNullOrEmpty(Content)) { 
-                return $"Hello {Name}, {Age} ({Content})";
+                return string.Format("Hello {0}, {1} ({2})", Name, Age, Content);
             }
 
-            return $"Hello {Name}, {Age}";
+            return string.Format("Hello {0}, {1}", Name, Age);
         }
     }
 }
