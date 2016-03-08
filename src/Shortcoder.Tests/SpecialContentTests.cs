@@ -155,20 +155,15 @@ namespace Shortcoder.Tests
             Assert.Equal("lorem [[dummy-small] lorem ipsum From Dummy Small", result);
         }
 
-        [Fact]
-        public void IncompleteTagsShouldBeIgnored()
+        [Theory]
+        [InlineData("[ [dummy-small]", "[ From Dummy Small")]
+        [InlineData("[dummy-small [dummy-small]", "[dummy-small From Dummy Small")]
+        [InlineData("[dummy-small[dummy-small]", "[dummy-small[dummy-small]")]
+        public void IncompleteTagsShouldBeIgnored(string content, string expected)
         {
-            var content1 = "[ [dummy-small]";
-            var content2 = "[dummy-small [dummy-small]";
-            var content3 = "[dummy-small[dummy-small]";
+            var result = _shortcodeParser.Parse(content);
 
-            var result1 = _shortcodeParser.Parse(content1);
-            var result2 = _shortcodeParser.Parse(content2);
-            var result3 = _shortcodeParser.Parse(content3);
-
-            Assert.Equal("[ From Dummy Small", result1);
-            Assert.Equal("[dummy-small From Dummy Small", result2);
-            Assert.Equal("[dummy-small[dummy-small]", result3);
+            Assert.Equal(expected, result);
         }
     }
 }
