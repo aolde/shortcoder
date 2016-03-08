@@ -148,7 +148,7 @@ namespace Shortcoder.Tests
         public void DummyAdvancdContentWithChildShortcodesShouldNotBeParsed()
         {
             var content1 = "[dummy-advanced name=\"Joe\" age=20]Hello [dummy-medium name=\"Doe\"] World[/dummy-advanced]";
-            var content2 = "[dummy-advanced name=\"Joe\" age='20' /]Hello [dummy-advanced name=\"Doe\"] World[/dummy-advanced]";
+            var content2 = "[dummy-advanced name=\"Joe\" age='20' /] and [dummy-advanced name=\"Doe\" age=22]World[/dummy-advanced]";
             var content3 = "[dummy-advanced name=\"Joe\" age=20]Hello [dummy-advanced name=\"Doe\"]Big[/dummy-advanced] World[/dummy-advanced]";
 
             var result1 = _shortcodeParser.Parse(content1);
@@ -156,7 +156,7 @@ namespace Shortcoder.Tests
             var result3 = _shortcodeParser.Parse(content3);
 
             Assert.Equal("Hello Joe, 20 (Hello [dummy-medium name=\"Doe\"] World)", result1);
-            Assert.Equal("Hello Joe, 20 (Hello [dummy-advanced name=\"Doe\"] World)", result2);
+            Assert.Equal("Hello Joe, 20 and Hello Doe, 22 (World)", result2);
             Assert.Equal("Hello Joe, 20 (Hello [dummy-advanced name=\"Doe\"]Big[/dummy-advanced] World)", result3);
         }
 

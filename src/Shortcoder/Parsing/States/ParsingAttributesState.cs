@@ -54,16 +54,18 @@ namespace Shortcoder.Parsing.States
 
                 _textParser.MovePast(new[] { enclosingChar, CLOSING_SLASH_CHAR });
             }
-
-            _shortcodeParser.CurrentShortcode.EndPosition = _textParser.Position + 1;
             
-            if (_textParser.Peek() == SPACE_CHAR)
+            _textParser.MovePastWhitespace();
+
+            if (IsAttributeNameChar(_textParser.Peek()))
             {
-                _textParser.MovePast(new[] { SPACE_CHAR });
                 SetState(new ParsingAttributesState(_shortcodeParser));
             }
             else
             {
+                _textParser.MovePast(new[] { CLOSING_SLASH_CHAR, TAG_END_CHAR });
+                _shortcodeParser.CurrentShortcode.EndPosition = _textParser.Position;
+
                 StoreCurrentShortcode();
 
                 SetState(new LookingForTagState(_shortcodeParser));  

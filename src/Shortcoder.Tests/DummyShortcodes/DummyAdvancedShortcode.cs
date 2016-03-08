@@ -8,7 +8,11 @@
         public override string Generate(IShortcodeContext context)
         {
             //var parsedContent = context.Parser.Parse(Content);
-            return string.Format("Hello {0}, {1} ({2})", Name, Age, Content);
+            if (!string.IsNullOrEmpty(Content)) { 
+                return $"Hello {Name}, {Age} ({Content})";
+            }
+
+            return $"Hello {Name}, {Age}";
         }
     }
 }
