@@ -1,4 +1,5 @@
-﻿using Shortcoder.Tests.DummyShortcodes;
+﻿using System;
+using Shortcoder.Tests.DummyShortcodes;
 using Xunit;
 
 namespace Shortcoder.Tests
@@ -158,6 +159,24 @@ namespace Shortcoder.Tests
             Assert.Equal("Hello Joe, 20 (Hello [dummy-medium name=\"Doe\"] World)", result1);
             Assert.Equal("Hello Joe, 20 and Hello Doe, 22 (World)", result2);
             Assert.Equal("Hello Joe, 20 (Hello [dummy-advanced name=\"Doe\"]Big[/dummy-advanced] World)", result3);
+        }
+
+        [Fact]
+        public void DummyAdvancedShouldFailNicelyWithWrongTypeAttribute()
+        {
+            var content1 = "[dummy-advanced age='hello' /]";
+
+            Assert.Throws<FormatException>(() => _shortcodeParser.Parse(content1));
+        }
+
+        [Fact]
+        public void DummyAdvancedShouldReadAttributesWithSlash()
+        {
+            var content1 = "[dummy-advanced name='/slash' age=3 /]";
+
+            var result1 = _shortcodeParser.Parse(content1);
+
+            Assert.Equal("Hello /slash, 3", result1);
         }
 
     }
