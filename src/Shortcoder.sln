@@ -1,11 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shortcoder", "Shortcoder\Shortcoder.csproj", "{1ACD8352-12B4-4B80-9A0E-B6E147924E87}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shortcoder.Tests", "Shortcoder.Tests\Shortcoder.Tests.csproj", "{9C2BE50C-D41F-4BB5-888F-E6D828F62FEB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NuGetPackage", "NuGetPackage", "{AC6095F1-78C1-4606-86C6-149FB94680C4}"
+	ProjectSection(SolutionItems) = preProject
+		NuGetPackage\Shortcoder.nuspec = NuGetPackage\Shortcoder.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
