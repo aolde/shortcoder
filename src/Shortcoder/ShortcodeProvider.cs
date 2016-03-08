@@ -88,7 +88,7 @@ namespace Shortcoder
                     if (propertyInfo != null)
                     {
                         var type = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
-                        var safeValue = (attribute.Value == null) ? null : Convert.ChangeType(attribute.Value, type);
+                        var safeValue = attribute.Value == null ? null : Convert.ChangeType(attribute.Value, type);
 
                         propertyInfo.SetValue(shortcode, safeValue, null);
                     }
