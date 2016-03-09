@@ -59,9 +59,9 @@ namespace Shortcoder
             return _shortcodes[tag];
         }
 
-        public IShortcode Create(string tag, Dictionary<string, object> attributes = null, string content = null)
+        public IShortcode Create(string tag, Dictionary<string, object> attributes = null, string content = null, bool onlyDefined = true)
         {
-            var type = Get(tag);
+            var type = Get(tag) ?? (!onlyDefined ? typeof(ShortcodeItem) : null);
             var shortcode = Activator.CreateInstance(type) as IShortcode;
 
             if (shortcode != null)

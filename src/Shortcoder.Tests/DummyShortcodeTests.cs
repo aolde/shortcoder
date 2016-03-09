@@ -25,6 +25,8 @@ namespace Shortcoder.Tests
             shortcodeProvider.Add<DummyMediumShortcode>(tag: "dummy-medium");
             shortcodeProvider.Add<DummyHardShortcode>(tag: "dummy-hard");
             shortcodeProvider.Add<DummyAdvancedShortcode>(tag: "dummy-advanced");
+            shortcodeProvider.Add<DummyListShortcode>(tag: "dummy-list");
+            shortcodeProvider.Add<DummyListItemShortcode>(tag: "dummy-list-item");
 
             _shortcodeParser = new ShortcodeParser(shortcodeProvider);    
         }
@@ -179,5 +181,21 @@ namespace Shortcoder.Tests
             Assert.Equal("Hello /slash, 3", result1);
         }
 
+        [Theory]
+        //[InlineData("[dummy-list]", "")]
+        //[InlineData("[dummy-list][dummy-list-item][/dummy-list]", "<ul><li>Item</li></ul>")]
+        //[InlineData("[dummy-list][dummy-list-item /][/dummy-list]", "<ul><li>Item</li></ul>")]
+        //[InlineData("[dummy-list] LOREM [dummy-list-item /] LOREM [/dummy-list]", "<ul><li>Item</li></ul>")]
+        //[InlineData("[dummy-list][dummy-list-item][dummy-list-item][dummy-list-item][/dummy-list]", "<ul><li>Item</li><li>Item</li><li>Item</li></ul>")]
+        //[InlineData("[dummy-list][dummy-list-item][/dummy-list-item][dummy-list-item][/dummy-list]", "<ul><li>Item</li><li>Item</li></ul>")]
+        //[InlineData("[dummy-list][dummy-list-item]Content[/dummy-list-item][/dummy-list]", "<ul><li>ItemContent</li></ul>")]
+        //[InlineData("[dummy-list][dummy-list-item]Content[/dummy-list-item][/dummy-list]", "<ul><li>ItemContent</li></ul>")]
+        [InlineData("[dummy-list][undefined]Content[/undefined][/dummy-list]", "<ul><li>Content</li></ul>")]
+        public void ListTests(string content, string expected)
+        {
+            var result = _shortcodeParser.Parse(content);
+
+            Assert.Equal(expected, result);
+        }
     }
 }

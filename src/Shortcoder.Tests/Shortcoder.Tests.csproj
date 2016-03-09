@@ -78,6 +78,8 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="DummyShortcodes\DummyListItemShortcode.cs" />
+    <Compile Include="DummyShortcodes\DummyListShortcode.cs" />
     <Compile Include="DummyShortcodes\DummyAdvancedShortcode.cs" />
     <Compile Include="DummyShortcodes\DummyHardShortcode.cs" />
     <Compile Include="DummyShortcodes\DummyMediumShortcode.cs" />

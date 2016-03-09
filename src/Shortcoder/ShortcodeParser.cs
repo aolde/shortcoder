@@ -38,16 +38,24 @@ namespace Shortcoder
             ShortcodeProvider = shortcodeProvider;
         }
 
+        public List<IShortcode> GetShortcodes(string content)
+        {
+            ParseInternal(content);
+
+            if (!ParseInstructions.Any())
+            {
+                return null;
+            }
+
+            return ParseInstructions
+                .Where(pi => !string.IsNullOrEmpty(pi.Tag))
+                .Select(pi => ShortcodeProvider.Create(pi.Tag, pi.Attributes, pi.Content, false))
+                .ToList();
+        }
+
         public string Parse(string content)
         {
-            TextParser = new TextParser(content);
-            ParserState = new LookingForTagState(this);
-            ParseInstructions = new List<ShortcodeParseInfo>();
-
-            while (!TextParser.EndOfText)
-            {
-                ParserState.Parse();
-            }
+            ParseInternal(content);
 
             var contentBuilder = new StringBuilder(content);
 
@@ -89,6 +97,18 @@ namespace Shortcoder
             }
 
             return contentBuilder.ToString();
+        }
+
+        private void ParseInternal(string content)
+        {
+            TextParser = new TextParser(content);
+            ParserState = new LookingForTagState(this);
+            ParseInstructions = new List<ShortcodeParseInfo>();
+
+            while (!TextParser.EndOfText)
+            {
+                ParserState.Parse();
+            }
         }
     }
 }

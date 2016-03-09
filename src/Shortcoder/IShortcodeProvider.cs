@@ -12,6 +12,6 @@ namespace Shortcoder
         void Remove(string tag);
         bool Exists(string tag);
         Type Get(string tag);
-        IShortcode Create(string tag, Dictionary<string, object> attributes = null, string content = null);
+        IShortcode Create(string tag, Dictionary<string, object> attributes = null, string content = null, bool onlyDefined = true);
     }
 }
