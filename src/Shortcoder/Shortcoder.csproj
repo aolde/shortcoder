@@ -70,8 +70,17 @@
     <Compile Include="ShortcodeParserFactory.cs" />
     <Compile Include="ShortcodeProvider.cs" />
     <Compile Include="Parsing\ShortcodeParseInfo.cs" />
+    <Compile Include="Tokenizer\Lexer.cs" />
+    <Compile Include="Tokenizer\TokenPosition.cs" />
+    <Compile Include="Tokenizer\Tokens\AttributeToken.cs" />
+    <Compile Include="Tokenizer\Tokens\EscapedTagToken.cs" />
+    <Compile Include="Tokenizer\Tokens\TagEndToken.cs" />
+    <Compile Include="Tokenizer\Tokens\TagStartToken.cs" />
+    <Compile Include="Tokenizer\Tokens\TextToken.cs" />
+    <Compile Include="Tokenizer\Tokens\Token.cs" />
     <Compile Include="Utilities\StaticReflection.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
