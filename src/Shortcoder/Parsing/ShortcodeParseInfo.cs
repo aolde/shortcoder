@@ -7,7 +7,7 @@ namespace Shortcoder.Parsing
     {
         public ShortcodeParseInfo()
         {
-            Attributes = new Dictionary<string, object>(StringComparer.InvariantCultureIgnoreCase);
+            Attributes = new Dictionary<string, object>(StringComparer.CurrentCultureIgnoreCase);
         }
 
         public int BeginPosition { get; set; }

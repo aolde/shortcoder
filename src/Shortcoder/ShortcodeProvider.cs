@@ -30,7 +30,7 @@ namespace Shortcoder
         public void AddFromAssembly(Assembly assembly)
         {
             var type = typeof(IShortcode);
-            var types = assembly.GetTypes()
+            var types = assembly.DefinedTypes
                 .Where(t => type.IsAssignableFrom(t));
 
             foreach (var shortcodeType in types)
